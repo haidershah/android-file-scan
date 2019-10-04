@@ -16,16 +16,22 @@ import android.app.NotificationManager
 import android.content.Context
 import com.example.filescan.R
 
-
 class FileScanService : Service() {
+
+    companion object {
+        private const val NOTIFICATION_ID_SCANNING_FILES = 100
+        private const val NOTIFICATION_ID_SCAN_COMPLETE = 101
+    }
 
     private val job = Job()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         CoroutineScope(Dispatchers.IO + job).launch {
-            createNotification()
+            createScanningFilesNotification()
             scanFiles(Environment.getExternalStorageDirectory())
             sendCompletion()
+            clearNotification()
+            createScanCompleteNotification()
         }
         return super.onStartCommand(intent, flags, startId)
     }
@@ -34,11 +40,9 @@ class FileScanService : Service() {
         return null
     }
 
-    private fun createNotification() {
-        val channelId = "wow"
-        val notificationId = 100
-
-        val builder = NotificationCompat.Builder(this, channelId)
+    private fun createScanningFilesNotification() {
+        val builder = NotificationCompat
+            .Builder(this, application.packageName)
             .setSmallIcon(R.drawable.database)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.scanning_files))
@@ -47,8 +51,27 @@ class FileScanService : Service() {
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // notificationID allows you to update the notification later on.
-        notificationManager.notify(notificationId, builder.build())
+        notificationManager.notify(NOTIFICATION_ID_SCANNING_FILES, builder.build())
+    }
+
+    private fun createScanCompleteNotification() {
+        val builder = NotificationCompat
+            .Builder(this, application.packageName)
+            .setSmallIcon(R.drawable.database)
+            .setContentTitle(getString(R.string.app_name))
+            .setContentText(getString(R.string.scan_completed))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        notificationManager.notify(NOTIFICATION_ID_SCAN_COMPLETE, builder.build())
+    }
+
+    private fun clearNotification() {
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(NOTIFICATION_ID_SCANNING_FILES)
     }
 
     private suspend fun scanFiles(file: File) {
