@@ -28,6 +28,6 @@ class MainActivity : AppCompatActivity(), FileScanListener {
     }
 
     override fun onScanClicked() {
-        viewModel.scanFiles()
+        viewModel.scanFiles(this)
     }
 }
