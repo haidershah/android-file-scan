@@ -6,4 +6,5 @@
     <string name="stop_scan">Stop Scan</string>
 
     <string name="scan_completed">Scan Completed!</string>
+    <string name="scanning_files">Scanning files…</string>
 </resources>
