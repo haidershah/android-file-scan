@@ -1,6 +1,7 @@
 package com.example.filescan.viewmodel
 
 import android.content.Intent
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,6 +16,9 @@ class FileScanViewModel : ViewModel() {
 
     private val _scanBtnText = MutableLiveData<Int>(R.string.start_scan)
     val scanBtnText: LiveData<Int> get() = _scanBtnText
+
+    private val _scanCompletedVisibility = MutableLiveData<Int>(View.GONE)
+    val scanCompletedVisibility: LiveData<Int> get() = _scanCompletedVisibility
 
     fun onScanClicked(activity: AppCompatActivity) {
         when (_scanBtnText.value) {
@@ -39,5 +43,11 @@ class FileScanViewModel : ViewModel() {
 
     fun setFileName(fileName: String?) {
         _fileName.value = fileName
+    }
+
+    fun setIsCompleted(completed: Boolean) {
+        if (completed) {
+            _scanCompletedVisibility.value = View.VISIBLE
+        }
     }
 }

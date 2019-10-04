@@ -5,7 +5,5 @@
     <string name="start_scan">Start Scan</string>
     <string name="stop_scan">Stop Scan</string>
 
-    <!-- Toast messages -->
-    <string name="scan_started">Scan Started</string>
-    <string name="scan_completed">Scan Completed</string>
+    <string name="scan_completed">Scan Completed!</string>
 </resources>

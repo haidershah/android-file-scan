@@ -10,7 +10,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.filescan.R
 import com.example.filescan.databinding.ActivityMainBinding
 import com.example.filescan.receiver.FileScanReceiver
-import com.example.filescan.receiver.FileScanReceiver.Companion.ACTION_POST_FILE_NAME
+import com.example.filescan.receiver.FileScanReceiver.Companion.ACTION_SEND_COMPLETION
+import com.example.filescan.receiver.FileScanReceiver.Companion.ACTION_SEND_FILE_NAME
 import com.example.filescan.service.FileScanService
 import com.example.filescan.view.listener.FileScanListener
 import com.example.filescan.viewmodel.FileScanViewModel
@@ -49,9 +50,13 @@ class MainActivity : AppCompatActivity(), FileScanListener {
     }
 
     override fun onStart() {
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(ACTION_SEND_FILE_NAME)
+        intentFilter.addAction(ACTION_SEND_COMPLETION)
+
         LocalBroadcastManager
             .getInstance(this)
-            .registerReceiver(receiver, IntentFilter(ACTION_POST_FILE_NAME))
+            .registerReceiver(receiver, intentFilter)
         super.onStart()
     }
 
