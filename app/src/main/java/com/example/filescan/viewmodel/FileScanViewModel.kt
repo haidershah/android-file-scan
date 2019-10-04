@@ -36,6 +36,7 @@ class FileScanViewModel : ViewModel() {
 
     private fun stopScan(activity: AppCompatActivity) {
         _scanBtnText.value = R.string.start_scan
+        _scanCompletedVisibility.value = View.GONE
 
         val serviceIntent = Intent(activity.applicationContext, FileScanService::class.java)
         activity.stopService(serviceIntent)
