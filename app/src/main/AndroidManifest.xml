@@ -19,7 +19,9 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".service.ScanFilesService"/>
+        <service
+            android:name=".service.ScanFilesService"
+            android:exported="false" />
     </application>
 
 </manifest>
