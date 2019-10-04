@@ -13,8 +13,11 @@ import com.example.filescan.receiver.FileScanReceiver.Companion.ACTION_SEND_FILE
 import com.example.filescan.receiver.FileScanReceiver.Companion.EXTRA_FILE_NAME
 import com.example.filescan.receiver.FileScanReceiver.Companion.EXTRA_IS_COMPLETED
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import com.example.filescan.R
+import com.example.filescan.view.activity.MainActivity
+import java.lang.System.currentTimeMillis
 
 class FileScanService : Service() {
 
@@ -41,12 +44,17 @@ class FileScanService : Service() {
     }
 
     private fun createScanningFilesNotification() {
+        val intent = Intent(this, MainActivity::class.java)
+        val pendingIntent = PendingIntent
+            .getActivity(this, currentTimeMillis().toInt(), intent, 0)
+
         val builder = NotificationCompat
             .Builder(this, application.packageName)
             .setSmallIcon(R.drawable.database)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.scanning_files))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
 
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
