@@ -1,12 +1,15 @@
 package com.example.filescan.view.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.filescan.R
 import com.example.filescan.databinding.ActivityMainBinding
+import com.example.filescan.service.ScanFilesService
 import com.example.filescan.view.listener.FileScanListener
 import com.example.filescan.viewmodel.FileScanViewModel
 
@@ -27,7 +30,17 @@ class MainActivity : AppCompatActivity(), FileScanListener {
         binding.lifecycleOwner = this
     }
 
+    private fun stopScan() {
+        val serviceIntent = Intent(this, ScanFilesService::class.java)
+        stopService(serviceIntent)
+    }
+
     override fun onScanClicked() {
         viewModel.onScanClicked(this)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        stopScan()
     }
 }

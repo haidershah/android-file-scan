@@ -1,7 +1,6 @@
 package com.example.filescan.viewmodel
 
 import android.content.Intent
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,8 +16,6 @@ class FileScanViewModel : ViewModel() {
     private val _scanBtnText = MutableLiveData<Int>(R.string.start_scan)
     val scanBtnText: LiveData<Int> get() = _scanBtnText
 
-    private lateinit var intent: Intent
-
     fun onScanClicked(activity: AppCompatActivity) {
         when (_scanBtnText.value) {
             R.string.start_scan -> startScan(activity)
@@ -27,19 +24,16 @@ class FileScanViewModel : ViewModel() {
     }
 
     private fun startScan(activity: AppCompatActivity) {
-        intent = Intent(activity.applicationContext, ScanFilesService::class.java)
-        activity.startService(intent)
-
         _scanBtnText.value = R.string.stop_scan
+
+        val serviceIntent = Intent(activity.applicationContext, ScanFilesService::class.java)
+        activity.startService(serviceIntent)
     }
 
     private fun stopScan(activity: AppCompatActivity) {
-        if (!::intent.isInitialized) {
-            return
-        }
-
-        activity.stopService(intent)
-
         _scanBtnText.value = R.string.start_scan
+
+        val serviceIntent = Intent(activity.applicationContext, ScanFilesService::class.java)
+        activity.stopService(serviceIntent)
     }
 }
