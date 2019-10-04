@@ -10,7 +10,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.filescan.receiver.FileScanReceiver.Companion.ACTION_POST_FILE_NAME
 import com.example.filescan.receiver.FileScanReceiver.Companion.EXTRA_FILE_NAME
 
-class ScanFilesService : Service() {
+class FileScanService : Service() {
 
     private val job = Job()
 

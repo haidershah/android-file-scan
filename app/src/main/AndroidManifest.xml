@@ -20,7 +20,7 @@
         </activity>
 
         <service
-            android:name=".service.ScanFilesService"
+            android:name=".service.FileScanService"
             android:exported="false" />
     </application>
 

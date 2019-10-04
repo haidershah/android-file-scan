@@ -11,7 +11,7 @@ import com.example.filescan.R
 import com.example.filescan.databinding.ActivityMainBinding
 import com.example.filescan.receiver.FileScanReceiver
 import com.example.filescan.receiver.FileScanReceiver.Companion.ACTION_POST_FILE_NAME
-import com.example.filescan.service.ScanFilesService
+import com.example.filescan.service.FileScanService
 import com.example.filescan.view.listener.FileScanListener
 import com.example.filescan.viewmodel.FileScanViewModel
 
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), FileScanListener {
     }
 
     private fun stopScan() {
-        val serviceIntent = Intent(this, ScanFilesService::class.java)
+        val serviceIntent = Intent(this, FileScanService::class.java)
         stopService(serviceIntent)
     }
 

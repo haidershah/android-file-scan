@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.filescan.R
-import com.example.filescan.service.ScanFilesService
+import com.example.filescan.service.FileScanService
 
 class FileScanViewModel : ViewModel() {
 
@@ -26,14 +26,14 @@ class FileScanViewModel : ViewModel() {
     private fun startScan(activity: AppCompatActivity) {
         _scanBtnText.value = R.string.stop_scan
 
-        val serviceIntent = Intent(activity.applicationContext, ScanFilesService::class.java)
+        val serviceIntent = Intent(activity.applicationContext, FileScanService::class.java)
         activity.startService(serviceIntent)
     }
 
     private fun stopScan(activity: AppCompatActivity) {
         _scanBtnText.value = R.string.start_scan
 
-        val serviceIntent = Intent(activity.applicationContext, ScanFilesService::class.java)
+        val serviceIntent = Intent(activity.applicationContext, FileScanService::class.java)
         activity.stopService(serviceIntent)
     }
 
