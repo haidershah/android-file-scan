@@ -4,9 +4,11 @@ import android.app.Service
 import android.content.Intent
 import android.os.Environment
 import android.os.IBinder
-import android.util.Log
 import kotlinx.coroutines.*
 import java.io.File
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.example.filescan.receiver.FileScanReceiver.Companion.ACTION_POST_FILE_NAME
+import com.example.filescan.receiver.FileScanReceiver.Companion.EXTRA_FILE_NAME
 
 class ScanFilesService : Service() {
 
@@ -35,7 +37,13 @@ class ScanFilesService : Service() {
     }
 
     private fun processFile(file: File) {
-        Log.e("yooooo", "file: ${file.name}")
+        sendBroadcast(file.name)
+    }
+
+    private fun sendBroadcast(fileName: String) {
+        val intent = Intent(ACTION_POST_FILE_NAME)
+        intent.putExtra(EXTRA_FILE_NAME, fileName)
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
     }
 
     override fun onDestroy() {

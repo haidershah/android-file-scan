@@ -36,4 +36,8 @@ class FileScanViewModel : ViewModel() {
         val serviceIntent = Intent(activity.applicationContext, ScanFilesService::class.java)
         activity.stopService(serviceIntent)
     }
+
+    fun setFileName(fileName: String?) {
+        _fileName.value = fileName
+    }
 }
