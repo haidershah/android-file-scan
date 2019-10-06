@@ -60,6 +60,11 @@ class FileScanViewModel : ViewModel() {
 
     fun setLargestFileInfo(largestFileName: String?, largestFileSize: Long) {
         _largestFileName.value = largestFileName
-        _largestFileSize.value = largestFileSize.toString()
+
+        var formattedSize = largestFileSize
+        if(formattedSize > 1_000_000) {
+            formattedSize /= 1_000_000L
+        }
+        _largestFileSize.value = formattedSize.toString()
     }
 }
