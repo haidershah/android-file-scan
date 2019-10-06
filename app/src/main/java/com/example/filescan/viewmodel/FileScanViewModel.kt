@@ -20,6 +20,12 @@ class FileScanViewModel : ViewModel() {
     private val _scanCompletedVisibility = MutableLiveData<Int>(View.GONE)
     val scanCompletedVisibility: LiveData<Int> get() = _scanCompletedVisibility
 
+    private val _largestFileName = MutableLiveData<String>()
+    val largestFileName: LiveData<String> get() = _largestFileName
+
+    private val _largestFileSize = MutableLiveData<String>()
+    val largestFileSize: LiveData<String> get() = _largestFileSize
+
     fun onScanClicked(activity: AppCompatActivity) {
         when (_scanBtnText.value) {
             R.string.start_scan -> startScan(activity)
@@ -50,5 +56,10 @@ class FileScanViewModel : ViewModel() {
         if (completed) {
             _scanCompletedVisibility.value = View.VISIBLE
         }
+    }
+
+    fun setLargestFileInfo(largestFileName: String?, largestFileSize: Long) {
+        _largestFileName.value = largestFileName
+        _largestFileSize.value = largestFileSize.toString()
     }
 }

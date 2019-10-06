@@ -16,6 +16,8 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import com.example.filescan.R
+import com.example.filescan.receiver.FileScanReceiver.Companion.EXTRA_LARGEST_FILE_NAME
+import com.example.filescan.receiver.FileScanReceiver.Companion.EXTRA_LARGEST_FILE_SIZE
 import com.example.filescan.view.activity.MainActivity
 import java.lang.System.currentTimeMillis
 
@@ -27,6 +29,8 @@ class FileScanService : Service() {
     }
 
     private val job = Job()
+    private var largestFileName = ""
+    private var largestFileSize = 0L
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         CoroutineScope(Dispatchers.IO + job).launch {
@@ -85,6 +89,11 @@ class FileScanService : Service() {
     private suspend fun scanFiles(file: File) {
         processFile(file)
 
+        if (file.isFile && file.length() > largestFileSize) {
+            largestFileSize = file.length()
+            largestFileName = file.name
+        }
+
         if (file.isDirectory) {
             for (innerFile in file.listFiles()) {
                 delay(16)
@@ -106,6 +115,8 @@ class FileScanService : Service() {
     private fun sendCompletion() {
         val intent = Intent(ACTION_SEND_COMPLETION)
         intent.putExtra(EXTRA_IS_COMPLETED, true)
+        intent.putExtra(EXTRA_LARGEST_FILE_NAME, largestFileName)
+        intent.putExtra(EXTRA_LARGEST_FILE_SIZE, largestFileSize)
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
     }
 

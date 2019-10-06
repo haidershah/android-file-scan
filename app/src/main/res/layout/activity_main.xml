@@ -31,6 +31,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Scan Button -->
         <Button
             android:id="@+id/scanBtn"
             android:layout_width="wrap_content"
@@ -43,14 +44,57 @@
             app:layout_constraintTop_toBottomOf="@+id/statusView"
             tools:text="START SCAN" />
 
+        <!-- Largest File label-->
         <TextView
+            android:id="@+id/largestFileLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/largest_file"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scanBtn" />
+
+        <!-- Largest File name-->
+        <TextView
+            android:id="@+id/largestFileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@{viewModel.largestFileName}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/largestFileLabel"
+            tools:text="Passwords.txt" />
+
+        <!-- Largest File size-->
+        <TextView
+            android:id="@+id/largestFileSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.largestFileSize}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintBottom_toBottomOf="@+id/largestFileName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/largestFileName"
+            tools:text="5mb" />
+
+        <!-- Scan Completed -->
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/scan_completed"
-            android:visibility="@{viewModel.scanCompletedVisibility}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.scanCompletedVisibility}"
+            app:constraint_referenced_ids="textView,largestFileName,largestFileLabel,largestFileSize" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
