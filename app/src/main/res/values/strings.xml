@@ -8,4 +8,7 @@
     <string name="scan_completed">Scan Completed!</string>
     <string name="scanning_files">Scanning files…</string>
     <string name="largest_file">Largest File</string>
+
+    <string name="size_bytes">%1$s bytes</string>
+    <string name="size_mb">%1$smb</string>
 </resources>

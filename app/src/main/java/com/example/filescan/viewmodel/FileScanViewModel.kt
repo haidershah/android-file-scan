@@ -23,8 +23,8 @@ class FileScanViewModel : ViewModel() {
     private val _largestFileName = MutableLiveData<String>()
     val largestFileName: LiveData<String> get() = _largestFileName
 
-    private val _largestFileSize = MutableLiveData<String>()
-    val largestFileSize: LiveData<String> get() = _largestFileSize
+    private val _largestFileSize = MutableLiveData<Long>()
+    val largestFileSize: LiveData<Long> get() = _largestFileSize
 
     fun onScanClicked(activity: AppCompatActivity) {
         when (_scanBtnText.value) {
@@ -60,11 +60,6 @@ class FileScanViewModel : ViewModel() {
 
     fun setLargestFileInfo(largestFileName: String?, largestFileSize: Long) {
         _largestFileName.value = largestFileName
-
-        var formattedSize = largestFileSize
-        if(formattedSize > 1_000_000) {
-            formattedSize /= 1_000_000L
-        }
-        _largestFileSize.value = formattedSize.toString()
+        _largestFileSize.value = largestFileSize
     }
 }
