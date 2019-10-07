@@ -39,6 +39,7 @@ class FileScanService : Service() {
             sendCompletion()
             clearNotification()
             createScanCompleteNotification()
+            stopService(intent)
         }
         return super.onStartCommand(intent, flags, startId)
     }
